@@ -3,8 +3,6 @@ package com.github.dotkebi.infinitecalendar.demo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.github.dotkebi.infinitecalendar.CalendarFragment;
-
 public class MainActivity extends AppCompatActivity {
 
     @Override

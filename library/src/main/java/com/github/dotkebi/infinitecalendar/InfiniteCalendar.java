@@ -2,22 +2,19 @@ package com.github.dotkebi.infinitecalendar;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.os.Build;
-import android.support.v4.app.FragmentManager;
+import android.support.v4.view.PagerAdapter;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
 
-import com.antonyt.infiniteviewpager.InfiniteViewPager;
-
-import fr.castorflex.android.verticalviewpager.VerticalViewPager;
+import com.antonyt.infiniteviewpager.InfinitePagerAdapter;
 
 /**
  * @author by dotkebi@gmail.com on 2016-09-20.
  */
 public class InfiniteCalendar extends LinearLayout {
 
-    private VerticalViewPager viewPager;
+    private InfiniteVerticalViewPager viewPager;
 
     public InfiniteCalendar(Context context) {
         super(context);
@@ -63,9 +60,11 @@ public class InfiniteCalendar extends LinearLayout {
     }
 
     private void init(Context context) {
-        viewPager = new VerticalViewPager(context);
+        PagerAdapter adapter = new InfinitePagerAdapter(new CalendarPageAdapter());
 
-        viewPager.setAdapter(new CalendarPageAdapter());
+        viewPager = new InfiniteVerticalViewPager(context);
+        viewPager.setAdapter(adapter);
+
         addView(viewPager);
     }
 

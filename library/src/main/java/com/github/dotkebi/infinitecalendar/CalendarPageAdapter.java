@@ -1,8 +1,6 @@
 package com.github.dotkebi.infinitecalendar;
 
 import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
@@ -10,8 +8,7 @@ import android.widget.TextView;
 
 import java.util.Arrays;
 import java.util.Calendar;
-
-import static com.github.dotkebi.infinitecalendar.R.id.gridView;
+import java.util.Locale;
 
 /**
  * @author by dotkebi@gmail.com on 2016-09-20.
@@ -19,7 +16,7 @@ import static com.github.dotkebi.infinitecalendar.R.id.gridView;
 public class CalendarPageAdapter extends PagerAdapter {
 
     private Calendar calendar = Calendar.getInstance();
-    private GridView gridView;
+    private int previous;
 
     @Override
     public int getCount() {
@@ -30,18 +27,22 @@ public class CalendarPageAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
         View view = View.inflate(container.getContext(), R.layout.calendar_form, null);
 
-        TextView textView = (TextView) view.findViewById(R.id.status);
+        TextView month = (TextView) view.findViewById(R.id.month);
+        month.setText(String.format(Locale.KOREA, "%04d-%02d", calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1));
 
         String[] week = container.getResources().getStringArray(R.array.week);
+
+        TextView textView = (TextView) view.findViewById(R.id.status);
         textView.setText(Arrays.toString(week));
 
-        gridView = (GridView) view.findViewById(R.id.gridView);
+        GridView gridView = (GridView) view.findViewById(R.id.gridView);
 
-        if (position == 0) {
+        if (previous > position) {
             calendar.add(Calendar.MONTH, -1);
-        } else if (position == 2) {
+        } else if (previous < position) {
             calendar.add(Calendar.MONTH, 1);
         }
+        previous = position;
         gridView.setAdapter(new DayAdapter(calendar));
 
         container.addView(view);
@@ -57,6 +58,7 @@ public class CalendarPageAdapter extends PagerAdapter {
     public boolean isViewFromObject(View view, Object object) {
         return view == object;
     }
+
 
 
 }
