@@ -6,7 +6,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridView;
+import android.widget.TextView;
 
+import java.util.Arrays;
 import java.util.Calendar;
 
 /**
@@ -18,6 +21,7 @@ public class CalendarFragment extends Fragment {
     private static final String KEY_MONTH = "month";
 
     private Calendar calendar = Calendar.getInstance();
+    private GridView gridView;
 
     public CalendarFragment() {
     }
@@ -41,8 +45,22 @@ public class CalendarFragment extends Fragment {
             calendar.set(Calendar.YEAR, year);
             calendar.set(Calendar.MONTH, month);
         }
-        return super.onCreateView(inflater, container, savedInstanceState);
+        View view = inflater.inflate(R.layout.calendar_form, container, false);
+
+        TextView textView = (TextView) view.findViewById(R.id.status);
+
+        String[] week = getResources().getStringArray(R.array.week);
+        textView.setText(Arrays.toString(week));
+
+        gridView = (GridView) view.findViewById(R.id.gridView);
+        return view;
     }
 
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        gridView.setAdapter(new DayAdapter(calendar));
+    }
 
 }

@@ -1,6 +1,22 @@
 <resources>
     <string name="app_name">InfiniteCalendar</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="sunday">일</string>
+    <string name="monday">월</string>
+    <string name="tuesday">화</string>
+    <string name="wednesday">수</string>
+    <string name="thursday">목</string>
+    <string name="friday">금</string>
+    <string name="saturday">토</string>
+
+    <string-array name="week">
+        <item>@string/sunday</item>
+        <item>@string/monday</item>
+        <item>@string/tuesday</item>
+        <item>@string/wednesday</item>
+        <item>@string/thursday</item>
+        <item>@string/friday</item>
+        <item>@string/saturday</item>
+    </string-array>
+
 </resources>

@@ -4,8 +4,11 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Build;
+import android.support.v4.app.FragmentManager;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
+
+import com.antonyt.infiniteviewpager.InfiniteViewPager;
 
 import fr.castorflex.android.verticalviewpager.VerticalViewPager;
 
@@ -62,6 +65,7 @@ public class InfiniteCalendar extends LinearLayout {
     private void init(Context context) {
         viewPager = new VerticalViewPager(context);
 
+        viewPager.setAdapter(new CalendarPageAdapter());
         addView(viewPager);
     }
 
