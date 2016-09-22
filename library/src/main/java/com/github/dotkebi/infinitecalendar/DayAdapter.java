@@ -1,5 +1,6 @@
 package com.github.dotkebi.infinitecalendar;
 
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -17,11 +18,14 @@ public class DayAdapter extends BaseAdapter {
 
     public DayAdapter(Calendar calendar) {
         this.calendar = calendar;
+        Log.i("refresh", calendar.getTime().toString());
     }
 
     @Override
     public int getCount() {
-        return calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+        Calendar thisMonth = Calendar.getInstance();
+        thisMonth.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), 1);
+        return thisMonth.get(Calendar.DAY_OF_WEEK) + calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
     }
 
     @Override
@@ -49,7 +53,10 @@ public class DayAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        viewHolder.day.setText(String.format(Locale.KOREA, "%d", position + 1));
+        int previous = calendar.get(Calendar.DAY_OF_WEEK);
+        if (position > previous) {
+            viewHolder.day.setText(String.format(Locale.KOREA, "%d", position - previous));
+        }
         viewHolder.contents.setText("");
         return convertView;
     }

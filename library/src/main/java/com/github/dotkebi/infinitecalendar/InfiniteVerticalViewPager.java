@@ -2,6 +2,7 @@ package com.github.dotkebi.infinitecalendar;
 
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 
 import com.antonyt.infiniteviewpager.InfinitePagerAdapter;
@@ -11,7 +12,7 @@ import fr.castorflex.android.verticalviewpager.VerticalViewPager;
 /**
  * @author by dotkebi on 2016. 9. 22..
  */
-public class InfiniteVerticalViewPager extends VerticalViewPager {
+public class InfiniteVerticalViewPager extends ViewPager {
 
     public InfiniteVerticalViewPager(Context context) {
         super(context);

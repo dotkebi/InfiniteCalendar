@@ -4,7 +4,9 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
 import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.LinearLayout;
 
 import com.antonyt.infiniteviewpager.InfinitePagerAdapter;
@@ -15,6 +17,7 @@ import com.antonyt.infiniteviewpager.InfinitePagerAdapter;
 public class InfiniteCalendar extends LinearLayout {
 
     private InfiniteVerticalViewPager viewPager;
+    private int page;
 
     public InfiniteCalendar(Context context) {
         super(context);
@@ -60,10 +63,43 @@ public class InfiniteCalendar extends LinearLayout {
     }
 
     private void init(Context context) {
-        PagerAdapter adapter = new InfinitePagerAdapter(new CalendarPageAdapter());
+        //PagerAdapter adapter = new InfinitePagerAdapter(new CalendarPageAdapter());
+        final CalendarPageAdapter adapter = new CalendarPageAdapter();
+
+        final InfiniteCalendarPageAdapter infiniteCalendarPageAdapter = new InfiniteCalendarPageAdapter(adapter, new OnCalendarPageChangeListener() {
+            @Override
+            public void onCalendarPageChangeListener(int page) {
+                InfiniteCalendar.this.page = page;
+                Log.i("page", "" + page);
+            }
+        });
 
         viewPager = new InfiniteVerticalViewPager(context);
-        viewPager.setAdapter(adapter);
+        viewPager.setAdapter(infiniteCalendarPageAdapter);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                position %= 2;
+                Log.i("position", "" + position);
+                if (page > 0) {
+                    if (position == 1) {
+                        adapter.nextMonth();
+                    } else if (position == 0) {
+                        adapter.previousMonth();
+                    }
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
         addView(viewPager);
     }
