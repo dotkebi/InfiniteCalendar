@@ -1,6 +1,7 @@
 package com.github.dotkebi.infinitecalendar;
 
 import android.annotation.TargetApi;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.os.Build;
 import android.support.v4.view.PagerAdapter;
@@ -11,12 +12,15 @@ import android.widget.LinearLayout;
 
 import com.antonyt.infiniteviewpager.InfinitePagerAdapter;
 
+import fr.castorflex.android.verticalviewpager.VerticalViewPager;
+
 /**
  * @author by dotkebi@gmail.com on 2016-09-20.
  */
 public class InfiniteCalendar extends LinearLayout {
 
-    private InfiniteVerticalViewPager viewPager;
+    //private InfiniteVerticalViewPager viewPager;
+    private VerticalViewPager viewPager;
     private int page;
 
     public InfiniteCalendar(Context context) {
@@ -66,17 +70,22 @@ public class InfiniteCalendar extends LinearLayout {
         //PagerAdapter adapter = new InfinitePagerAdapter(new CalendarPageAdapter());
         final CalendarPageAdapter adapter = new CalendarPageAdapter();
 
-        final InfiniteCalendarPageAdapter infiniteCalendarPageAdapter = new InfiniteCalendarPageAdapter(adapter, new OnCalendarPageChangeListener() {
+        /*final InfiniteCalendarPageAdapter infiniteCalendarPageAdapter = new InfiniteCalendarPageAdapter(adapter, new OnCalendarPageChangeListener() {
             @Override
             public void onCalendarPageChangeListener(int page) {
                 InfiniteCalendar.this.page = page;
                 Log.i("page", "" + page);
             }
-        });
+        });*/
 
-        viewPager = new InfiniteVerticalViewPager(context);
-        viewPager.setAdapter(infiniteCalendarPageAdapter);
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+        DatePickerDialog datePickerDialog;
+
+        //viewPager = new InfiniteVerticalViewPager(context);
+        viewPager = new VerticalViewPager(context);
+        viewPager.setAdapter(adapter);
+        viewPager.setCurrentItem(adapter.getCount());
+        /*viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -99,9 +108,16 @@ public class InfiniteCalendar extends LinearLayout {
             public void onPageScrollStateChanged(int state) {
 
             }
-        });
+        });*/
 
         addView(viewPager);
     }
 
+    @Override
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        //super.onLayout(changed, l, t, r, b);
+        final int width = right - left;
+        final int height = bottom - top;
+        viewPager.layout(0, 0, width, height);
+    }
 }

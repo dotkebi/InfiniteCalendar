@@ -14,18 +14,20 @@ import java.util.Locale;
  */
 public class DayAdapter extends BaseAdapter {
 
-    private Calendar calendar;
+    private Calendar calendar = Calendar.getInstance();
 
     public DayAdapter(Calendar calendar) {
-        this.calendar = calendar;
+        this.calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), 1);
+        //this.calendar = calendar;
         Log.i("refresh", calendar.getTime().toString());
     }
 
     @Override
     public int getCount() {
-        Calendar thisMonth = Calendar.getInstance();
-        thisMonth.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), 1);
-        return thisMonth.get(Calendar.DAY_OF_WEEK) + calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+//        Calendar thisMonth = Calendar.getInstance();
+//        thisMonth.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), 1);
+        //return thisMonth.get(Calendar.DAY_OF_WEEK) - 1 + thisMonth.getActualMaximum(Calendar.DAY_OF_MONTH);
+        return calendar.get(Calendar.DAY_OF_WEEK) - 1 + calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
     }
 
     @Override
@@ -53,7 +55,7 @@ public class DayAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        int previous = calendar.get(Calendar.DAY_OF_WEEK);
+        int previous = calendar.get(Calendar.DAY_OF_WEEK) - 2;
         if (position > previous) {
             viewHolder.day.setText(String.format(Locale.KOREA, "%d", position - previous));
         }
